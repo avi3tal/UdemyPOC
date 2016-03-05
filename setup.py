@@ -2,7 +2,8 @@ from setuptools import setup
 
 setup(
     name="udemypoc",
-    packages=['udemylib'],
+    packages=['udemylib',
+              'udemylib.pom'],
     long_description=open('README.rst').read(),
     author='Avi Tal',
     author_email='avi3tal@gmail.com',
