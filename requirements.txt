@@ -1,0 +1,4 @@
+tox
+pytest==2.9.0
+selenium==2.52.0
+six
