@@ -33,6 +33,8 @@ class TestUdemyFlow1(unittest.TestCase):
         '''
         page = Base(self.driver).open(conf['page_url'])
         courses = page.login(**conf['login'])
+        # NOTE: in case hover=True Failed to navigate
+        # comment line 38 and uncomment lines 39-40
         webdev = courses.browse_courses.development(hover=True).web_development
 #         dev = courses.browse_courses.development(hover=False)
 #         webdev = dev.lmenu.web_development()

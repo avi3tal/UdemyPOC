@@ -8,9 +8,6 @@ from udemylib.webelement import WebElement
 
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.action_chains import ActionChains
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.common.by import By
 
 
 class _DevelopmentWE(WebElement):
@@ -33,13 +30,14 @@ class LeftMenu(WebElement):
     '''
     Left Menu element to list all elements in the menu and control
     as attributes
-    
-    TODO: add all menue elements
+
+    TODO: add all menu elements
     '''
     loc = {
         'devel': "xpath=//li[@data-submenu-id='submenu-development']",
         'toolbar_on': "xpath=//*[class='hide-wrapper-left-btn on']",
-        'submenu-devel': 'id=submenu-development'}
+        "submenu-devel": "id=submenu-development",
+        "menu": "class=dropdown-menu"}
 
     def __init__(self, element, driver):
         super(LeftMenu, self).__init__(element)
@@ -51,17 +49,14 @@ class LeftMenu(WebElement):
         :param hover: hover attribute or navigate to attribute page
         :return: Page if hover=False, WebElement if hover=True
         '''
+        e = self.find_elements_by_locator(LeftMenu.loc["devel"])[-1]
         if hover:
-#             devel = WebDriverWait(self._d, 10).until(EC.visibility_of_element_located((By.XPATH, "//*[@data-submenu-id='submenu-development']")))
-            subdev = ActionChains(self._d).move_to_element(self.find_elements_by_locator(LeftMenu.loc["devel"])[0])
+            subdev = ActionChains(self._d).move_to_element(e)
             subdev.perform()
-
-#             subdev = WebDriverWait(subdev, 20).until(EC.visibility_of_element_located((By.ID, "submenu-development")))
-            return _DevelopmentWE(self.find_elements_by_locator(LeftMenu.loc["devel"])[0], self._d)
+            return _DevelopmentWE(e, self._d)
         else:
             # TODO: support navigation from development webpage
             # instead of hover 
-            e = self.find_elements_by_locator(LeftMenu.loc["devel"])[0]
             e.click()
             return Development(self._d)
 
@@ -70,11 +65,8 @@ class Courses(Page):
 
     # FIXME: fined better locators
     loc = {
-#         'courses': 'id=ud_courseimpressiontracker',
         'courses': 'class=ud-angular-loaded',
         'toolbar': 'class=hide-wrapper-left-btn',
-#         'toolbar': 'class=white-link',
-        'menu': 'css=.dropdown-menu',
         'toolbar_on': "xpath=//*[class='hide-wrapper-left-btn on']"}
 
     def wait_until_loaded(self):
@@ -88,7 +80,7 @@ class Courses(Page):
         '''
         # Make sure Browse Courses menu is displayed
         self.browse_courses = True
-        return LeftMenu(self.find_element_by_locator(Courses.loc['menu']), self.driver)
+        return LeftMenu(self.find_element_by_locator(LeftMenu.loc['menu']), self.driver)
 
     @browse_courses.setter
     def browse_courses(self, on):
@@ -98,7 +90,7 @@ class Courses(Page):
         
         '''
         try:
-            e = self.find_element_by_locator(Courses.loc['toolbar_on'])
+            e = self.find_element_by_locator(LeftMenu.loc['menu'])
             if not on:
                 e.click()
         except NoSuchElementException:

@@ -1,12 +1,7 @@
 '''
-Created on Mar 3, 2016
-
 @author: avi
 '''
 from selenium.webdriver.remote.webelement import WebElement as SeleniumWebElement
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.common.by import By
 
 
 class WebElement(SeleniumWebElement):
