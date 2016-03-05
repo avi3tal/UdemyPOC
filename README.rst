@@ -34,7 +34,8 @@ Run Test
 - The test assuming using selenium-server-standalone described in section "Requirements".
 - Tested on Firefox only.
 
-Run ::
+Run::
+
    $ py.test -m testme
 
 
