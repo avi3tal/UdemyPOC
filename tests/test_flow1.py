@@ -40,6 +40,15 @@ class TestUdemyFlow1(unittest.TestCase):
 #         webdev = dev.lmenu.web_development()
         webdev.search = "selenium"
         webdev.free = True
-        self.assertTrue(2 <= len(webdev.courses) <= 10, "Courses count is not between 2 - 10")
-        assert [c for c in webdev.courses if c.free]
-        assert [c for c in webdev.courses if "Selenium" in c.title]
+
+        # check courses len is higher or equel to 2 or lower or equal to 10
+        self.assertTrue(2 <= len(webdev.courses) <= 10,
+            "Failed to verify Courses count is between 2 - 10")
+
+        # Filter only Free courses and verify that the len before the filter
+        # and after the filter is equal
+        assert len([c for c in webdev.courses if c.free]) == len(webdev.courses), "Failed to verify All courses are Free"
+
+        # Filter courses with Selenium in title so that only if list is empty
+        # assertion Error will raise.
+        assert [c for c in webdev.courses if "Selenium" in c.title], "Failed to verify at least one course has Selenium in title"
